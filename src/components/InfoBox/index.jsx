@@ -9,7 +9,7 @@ const InfoBox = ({title}) => {
       <div className={style.content}>
         <div className={style.info__header}>
           <p>{title}</p>
-          <img src={Info1} alt="" />
+          <img src={Info1.src} alt="" />
         </div>
         <div className={style.info__value}>
           <div className="flex gap-2">

@@ -8,7 +8,7 @@ const TimeBox = () => {
       <div className={style.content}>
         <div className={style.info__header}>
           <p>Unlock Time</p>
-          <img src={Info1} alt="" />
+          <img src={Info1.src} alt="" />
         </div>
         <div className={style.info__value}>
           <div className={style.time}>
