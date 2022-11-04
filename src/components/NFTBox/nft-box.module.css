@@ -1,0 +1,11 @@
+
+.container{
+    @apply hidden lg:block;
+}
+
+.content{
+    @apply rounded-3xl border-white max-w-xl border-2;
+}
+.content img{
+    @apply w-full rounded-3xl;
+}

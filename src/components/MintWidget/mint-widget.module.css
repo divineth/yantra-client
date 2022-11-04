@@ -1,0 +1,108 @@
+.container {
+  @apply flex flex-col items-start bg-[#202020] py-8;
+  @apply rounded-2xl;
+}
+
+.content {
+  @apply px-6 w-full;
+}
+
+.mint__header {
+  @apply flex flex-col gap-1;
+  @apply mb-4;
+}
+
+.mint__header h2 {
+  @apply text-white nexa-reg-25 uppercase;
+}
+
+.mint__header p {
+  @apply montserrat-med-14 text-white;
+}
+
+.mint__info {
+  @apply flex justify-between gap-16;
+  @apply rounded-3xl border-y-2 border-white px-4 py-4;
+}
+
+.mint__info img {
+  @apply w-36 h-28 rounded-3xl border-2 border-white;
+  object-fit: cover;
+  /* background: url("../../assets/images/yantra-nft-placeholder.jpg");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat; */
+}
+
+.mint__info__text {
+  @apply flex flex-col items-end gap-2;
+}
+
+.mint__info__text p {
+  @apply montserrat-med-14 text-white;
+}
+
+.mint__info__text h3 {
+  @apply nexa-reg-20 text-white;
+}
+
+.mint__price {
+  @apply flex justify-between text-white nexa-reg-20 py-4;
+}
+
+.mint__form input {
+  @apply rounded-xl py-3 pl-4 pr-14 w-full;
+  @apply nexa-reg-20 text-white;
+  background: url("../../assets/images/yantra-input-bg.svg") no-repeat right;
+  background-size: cover;
+}
+
+.mint__slider {
+  @apply flex justify-between pt-6 gap-8 w-full;
+}
+
+.mint__slider button {
+  @apply rounded-lg bg-[#4d4d4d] px-4 border-b-2 border-r-2 border-b-black border-r-black;
+  @apply montserrat-med-15 text-white;
+}
+
+.mint__buttons {
+  @apply flex justify-center pt-8;
+}
+
+.mint__buttons button {
+  position: relative;
+  @apply rounded-3xl w-80 py-2 text-white nexa-reg-18 uppercase;
+  z-index: 0;
+}
+
+.mint__buttons button:nth-child(1) {
+  background: linear-gradient(
+    342.71deg,
+    #f9d207 -93.29%,
+    #f92032 64.35%,
+    #f92032 108.81%
+  );
+}
+
+.mint__buttons button:nth-child(1)::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    98.95deg,
+    #ffffff 2.81%,
+    #ffffff 2.82%,
+    rgba(0, 0, 0, 0.53) 51.36%,
+    #ffffff 96.85%
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  @apply rounded-3xl p-[0.2rem];
+  z-index: -1;
+}
+
+.mint__buttons button:nth-child(2) {
+  @apply bg-black border-[#4D4D4D] border-2;
+}
