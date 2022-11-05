@@ -3,7 +3,7 @@ import style from "./info-box.module.css";
 import Info1 from "../../assets/images/info_one.svg";
 import YantraSymbol from "../../assets/images/yantra-symbol.svg";
 
-const InfoBox = ({title}) => {
+const InfoBox = ({title, value=0}) => {
   return (
     <div className={style.container}>
       <div className={style.content}>
@@ -16,7 +16,7 @@ const InfoBox = ({title}) => {
             <img src={YantraSymbol.src} alt="" />
             <p>$YANTRA</p>
           </div>
-          <p>100</p>
+          <p>{value}</p>
         </div>
         <div className={style.usdt_value}>USDT Value: $0,000.00</div>
       </div>

@@ -1,8 +1,9 @@
 import React from "react";
 import style from "./docu-box.module.css";
 import ExternalLink from "../../assets/images/external-link.svg";
+import { formatUnits } from "ethers/lib/utils";
 
-const DocuBox = () => {
+const DocuBox = ({apr}) => {
   return (
     <div className={style.container}>
       <div className={style.content}>
@@ -32,8 +33,9 @@ const DocuBox = () => {
             </a>
           </div>
           <div className={style.body__content}>
+            
             <p>Yantra APR</p>
-            <div className={style.apr}>10.0%</div>
+            <div className={style.apr}>{apr ? `${formatUnits(apr?.percentage, 0)}.${formatUnits(apr?.decimals, 0)}%` : "-"}</div>
           </div>
         </div>
       </div>

@@ -5,8 +5,10 @@ import style from "./navbar.module.css";
 import WalletManager from "../WalletManager";
 import { Popover } from "@headlessui/react";
 import { Bars3Icon } from "@heroicons/react/20/solid";
+import { shortenAddress, useEthers } from "@usedapp/core";
 
 const Navbar = () => {
+  const { account } = useEthers();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   function closeModal() {
@@ -28,8 +30,15 @@ const Navbar = () => {
         <div className={style.navbar__right}>
           <Link href="/stake">Stake</Link>
           <Link href="/mint">Mint NFT</Link>
-          <button onClick={openModal} className={style.connect_btn}>
-            Connect Wallet
+          <button
+            onClick={openModal}
+            className={
+              account
+                ? style.connect_btn_connected
+                : style.connect_btn
+            }
+          >
+            {account ? shortenAddress(account) : "Connect Wallet"}
           </button>
         </div>
         <Popover className={style.mobile__menu}>
@@ -52,8 +61,17 @@ const Navbar = () => {
                     <div className="flex nexa-reg-18 text-white flex-col gap-4">
                       <Link href="/stake">Stake</Link>
                       <Link href="/mint">Mint NFT</Link>
-                      <button onClick={openModal} className={style.connect_btn}>
-                        Connect Wallet
+                      <button
+                        onClick={openModal}
+                        className={
+                          account
+                            ? style.connect_btn_connected
+                            : style.connect_btn
+                        }
+                      >
+                        {account
+                          ? shortenAddress(account)
+                          : "Connect Wallet"}
                       </button>
                     </div>
                   </div>

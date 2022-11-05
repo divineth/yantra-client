@@ -7,21 +7,21 @@ import Coinbase from "../../assets/images/coinbase.svg";
 import CopySymbol from "../../assets/images/copy.svg";
 import ExternalLink from "../../assets/images/external-link.svg";
 import { CopyToClipboard } from "react-copy-to-clipboard";
-
+import { useEthers, shortenAddress } from "@usedapp/core";
 
 const providers = [
   {
-    options: {},
+    options: {type: 'metamask'},
     displayName: "MetaMask",
     icon: MetaMask.src,
   },
   {
-    options: { provider: "walletconnect" },
+    options: { type: "coinbase" },
     displayName: "Coinbase Wallet",
     icon: Coinbase.src,
   },
   {
-    options: { provider: "walletconnect" },
+    options: { type: "metamask" },
     displayName: "WalletConnect",
     icon: WalletConnect.src,
   },
@@ -29,7 +29,8 @@ const providers = [
 
 function WalletManager({ isOpen, onCloseModal }) {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const walletAddress = "0xabcd";
+  const { activateBrowserWallet, account, deactivate } = useEthers();
+
 
   const [copied, setCopied] = useState(false);
 
@@ -42,7 +43,7 @@ function WalletManager({ isOpen, onCloseModal }) {
 
   return (
     <>
-      <Transition appear show={isOpen && !isAuthenticated} as={Fragment}>
+      <Transition appear show={isOpen && account == undefined} as={Fragment}>
         <Dialog as="div" className={style.wallet_dialog} onClose={onCloseModal}>
           <div className={style.wallet_dailog_containter}>
             <Dialog.Overlay className={style.wallet_dialog_overlay} />
@@ -83,7 +84,7 @@ function WalletManager({ isOpen, onCloseModal }) {
                   <ul className={style.wallet_dialog_providers_list}>
                     {providers.map(({ options, displayName, icon }, key) => (
                       <li key={key}>
-                        <button onClick={() => setIsAuthenticated(true)}>
+                        <button onClick={() => activateBrowserWallet(options)}>
                           <img src={icon} alt={displayName} />
                           <span>{displayName}</span>
                         </button>
@@ -97,7 +98,7 @@ function WalletManager({ isOpen, onCloseModal }) {
         </Dialog>
       </Transition>
 
-      <Transition appear show={isOpen && isAuthenticated} as={Fragment}>
+      <Transition appear show={isOpen && account != undefined} as={Fragment}>
         <Dialog as="div" className={style.wallet_dialog} onClose={onCloseModal}>
           <div className={style.wallet_dailog_containter}>
             <Dialog.Overlay className={style.wallet_dialog_overlay} />
@@ -140,7 +141,7 @@ function WalletManager({ isOpen, onCloseModal }) {
                     <p>Connected to $YANTRA</p>
                     <button
                       onClick={() => {
-                        setIsAuthenticated(false);
+                        deactivate();
                       }}
                       className={style.wallet_dialog_disconnect}
                     >
@@ -149,10 +150,10 @@ function WalletManager({ isOpen, onCloseModal }) {
                   </div>
 
                   <div className={style.wallet_dialog_address}>
-                    <p>{walletAddress}</p>
+                    <p>{account != undefined && shortenAddress(account)}</p>
                     <div className={style.wallet_dialog_address_copy_etherscan}>
                       <CopyToClipboard
-                        text={walletAddress}
+                        text={account}
                         onCopy={() => addressCopied()}
                       >
                         <p className={style.wallet_dialog_bottom_text}>
@@ -166,7 +167,7 @@ function WalletManager({ isOpen, onCloseModal }) {
 
                       <p className={style.wallet_dialog_bottom_text}>
                         <a
-                          href={`https://etherscan.io/address/${walletAddress}`}
+                          href={`https://etherscan.io/address/${account}`}
                           target="_blank"
                           rel="noopener noreferrer"
                         >

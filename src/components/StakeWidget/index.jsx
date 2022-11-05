@@ -3,8 +3,10 @@ import style from "./stake-widget.module.css";
 import CustomSlider from "../CustomSlider";
 import ConfirmStakeModal from "../ConfirmStakeModal";
 
+
 const StakeWidget = () => {
   const [modalOpen, setModalOpen] = useState(false);
+  const [amount, setAmount] = useState(0);
 
   const closeModal = () => {
     setModalOpen(false);
@@ -44,7 +46,7 @@ const StakeWidget = () => {
           <p className={style.stake__balance}>Balance: 0.00</p>
         </div>
         <div className={style.stake__form}>
-          <input className={style.stake__input} type="text" />
+          <input className={style.stake__input} type="text" value={amount} onChange={(e)=>{setAmount(e.target.value)}} />
           <div className={style.stake__slider}>
             <CustomSlider
               aria-label="amount"
