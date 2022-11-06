@@ -2,23 +2,24 @@ import React, { useState, useEffect } from "react";
 import style from "./info-box.module.css";
 import Info1 from "../../assets/images/info_one.svg";
 import intervalToDuration from "date-fns/intervalToDuration";
+import { useEthers } from "@usedapp/core";
 
 const TimeBox = ({ timestamp }) => {
   const [timer, setTimer] = useState();
+  const [timerInterval, setTimerInterval] = useState();
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      if (timestamp > 0) {
-        console.log("I am here")
+    if (timestamp > 0) {
+      const interval = setInterval(() => {
         setTimer(
           intervalToDuration({ start: new Date(timestamp), end: new Date() })
         );
-      } else {
-        console.log("Clearing interval");
-        clearInterval(interval);
-        setTimer();
-      }
-    }, 1000);
+        setTimerInterval(interval);
+      }, 1000);
+    } else {
+      clearInterval(timerInterval);
+      setTimer();
+    }
   }, [timestamp]);
 
   return (
