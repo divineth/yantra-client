@@ -9,6 +9,7 @@ import {
   utils } from "ethers";
 import { useStakeTokens } from "../../hooks/stake/useStakeTokens";
 import { useRouter } from "next/router";
+import SpinnerAlt from "../../assets/images/spinner-alt.svg";
 
 const ConfirmStakeModal = ({ isOpen, onCloseModal, stakeAmount, contract }) => {
   const router = useRouter();
@@ -146,9 +147,11 @@ const ConfirmStakeModal = ({ isOpen, onCloseModal, stakeAmount, contract }) => {
                         isApproved ||
                         isApproving
                       }
+                      className="flex justify-center items-center gap-1"
                       onClick={handleApprove}
                     >
                       Approve
+                      {isApproving && <img className="w-6" src={SpinnerAlt.src} alt="" />}
                     </button>
                     <button
                       disabled={
@@ -156,9 +159,11 @@ const ConfirmStakeModal = ({ isOpen, onCloseModal, stakeAmount, contract }) => {
                         !isApproved ||
                         isStaking
                       }
+                      className="flex justify-center items-center gap-1"
                       onClick={stakeTokens}
                     >
                       Stake
+                      {isStaking && <img className="w-6" src={SpinnerAlt.src} alt="" />}
                     </button>
                   </div>
                 </div>

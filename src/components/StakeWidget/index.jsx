@@ -15,6 +15,8 @@ import { BigNumber } from "ethers";
 import WalletManager from "../WalletManager";
 import { useUnstakeTokens } from "../../hooks/stake/useUnstakeTokens";
 
+import SpinnerAlt from "../../assets/images/spinner-alt.svg";
+
 const StakeWidget = ({ stakedTokens }) => {
   const { account } = useEthers();
   const [modalOpen, setModalOpen] = useState(false);
@@ -42,7 +44,6 @@ const StakeWidget = ({ stakedTokens }) => {
     ) {
       alert("Failed to unstake tokens");
       setIsUnstaking(false);
-      setAmount(0);
     }
   }, [unstakeState]);
 
@@ -187,8 +188,12 @@ const StakeWidget = ({ stakedTokens }) => {
                   isUnstaking
                 }
                 onClick={handleUnstakeToken}
+                className="flex justify-center items-center gap-1"
               >
                 Unstake
+                {isUnstaking && (
+                  <img className="w-6" src={SpinnerAlt.src} alt="" />
+                )}
               </button>
             </>
           ) : (
