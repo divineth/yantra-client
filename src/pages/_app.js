@@ -21,7 +21,8 @@ const config = {
     metamask: new MetamaskConnector(),
     coinbase: new CoinbaseWalletConnector(),
   },
-  refresh: 5
+  refresh: 5,
+  gasLimitBufferPercentage: 10,
 };
 
 function MyApp({ Component, pageProps }) {

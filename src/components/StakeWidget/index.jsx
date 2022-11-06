@@ -82,12 +82,17 @@ const StakeWidget = ({ stakedTokens }) => {
   }, [balance]);
 
   useEffect(() => {
-    if (amount <= 0) {
-      setErrorMessage("Enter an amount");
-    } else if (balance && compareNonTokenWithToken(balance, amount, 18) == -1) {
-      setErrorMessage("Insufficient balance");
-    } else {
-      setErrorMessage("");
+    if (account) {
+      if (amount <= 0) {
+        setErrorMessage("Enter an amount");
+      } else if (
+        balance &&
+        compareNonTokenWithToken(balance, amount, 18) == -1
+      ) {
+        setErrorMessage("Insufficient balance");
+      } else {
+        setErrorMessage("");
+      }
     }
   }, [amount]);
 
