@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import style from "./wallet-manager.module.css";
 import MetaMask from "../../assets/images/metamask.png";
@@ -7,11 +7,12 @@ import Coinbase from "../../assets/images/coinbase.svg";
 import CopySymbol from "../../assets/images/copy.svg";
 import ExternalLink from "../../assets/images/external-link.svg";
 import { CopyToClipboard } from "react-copy-to-clipboard";
-import { useEthers, shortenAddress } from "@usedapp/core";
+import { useEthers, shortenIfAddress } from "@usedapp/core";
+import Spinner from "../../assets/images/spinner.svg";
 
 const providers = [
   {
-    options: {type: 'metamask'},
+    options: { type: "metamask" },
     displayName: "MetaMask",
     icon: MetaMask.src,
   },
@@ -29,16 +30,40 @@ const providers = [
 
 function WalletManager({ isOpen, onCloseModal }) {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const { activateBrowserWallet, account, deactivate } = useEthers();
-
+  const { activateBrowserWallet, account, deactivate, error, isLoading } = useEthers();
+  const [selectedKey, setSelectedKey] = useState(-1);
 
   const [copied, setCopied] = useState(false);
+
+  useEffect(() => {
+    if (account && isLoading) {
+      setSelectedKey(-1);
+    }
+  }, [account]);
+
+  useEffect(() => {
+    if(error){
+      setSelectedKey(-1);
+
+      alert(error);
+    }
+  }, [error])
+  
 
   const addressCopied = () => {
     setCopied(true);
     setTimeout(() => {
       setCopied(false);
     }, 2000);
+  };
+
+  const handleConnectWallet = (options, key) => {
+    setSelectedKey(key);
+    try {
+      activateBrowserWallet(options);
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   return (
@@ -84,9 +109,15 @@ function WalletManager({ isOpen, onCloseModal }) {
                   <ul className={style.wallet_dialog_providers_list}>
                     {providers.map(({ options, displayName, icon }, key) => (
                       <li key={key}>
-                        <button onClick={() => activateBrowserWallet(options)}>
+                        <button
+                          disabled={isLoading}
+                          onClick={() => handleConnectWallet(options, key)}
+                        >
                           <img src={icon} alt={displayName} />
                           <span>{displayName}</span>
+                          {isLoading && key == selectedKey  && (<span>
+                            <img src={Spinner.src} alt="" />
+                          </span>)}
                         </button>
                       </li>
                     ))}
@@ -150,7 +181,7 @@ function WalletManager({ isOpen, onCloseModal }) {
                   </div>
 
                   <div className={style.wallet_dialog_address}>
-                    <p>{account != undefined && shortenAddress(account)}</p>
+                    <p>{shortenIfAddress(account)}</p>
                     <div className={style.wallet_dialog_address_copy_etherscan}>
                       <CopyToClipboard
                         text={account}

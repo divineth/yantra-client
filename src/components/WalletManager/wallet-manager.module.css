@@ -76,8 +76,8 @@
     width: 34px;
   }
   
-  .wallet_dialog_providers_list button span {
-    @apply nexa-reg-16 text-white ml-5;
+  .wallet_dialog_providers_list button span:first-of-type {
+    @apply nexa-reg-16 text-white ml-5 mr-auto;
   }
   
   .wallet_dialog_provider {

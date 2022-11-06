@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import style from "./info-box.module.css";
 import Info1 from "../../assets/images/info_one.svg";
 import intervalToDuration from "date-fns/intervalToDuration";
-import { useEthers } from "@usedapp/core";
 
 const TimeBox = ({ timestamp }) => {
   const [timer, setTimer] = useState();
