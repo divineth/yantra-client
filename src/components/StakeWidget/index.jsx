@@ -25,7 +25,7 @@ const StakeWidget = () => {
   };
 
   const setMaxValue = () => {
-    setAmount(formattedBalance);
+    setAmount((+formattedBalance).toFixed(0));
     setSliderValue(100);
   };
 
@@ -33,7 +33,8 @@ const StakeWidget = () => {
     setSliderValue(value);
     if (balance) {
       const val = BigNumber.from(balance.mul(value).div(100));
-      setAmount(formatUnits(val), 18);
+      const res = formatUnits(val, 18);
+      setAmount((+res).toFixed(0));
     }
   };
 

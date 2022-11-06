@@ -29,8 +29,14 @@ const ConfirmStakeModal = ({ isOpen, onCloseModal, stakeAmount, contract }) => {
     stakeState;
 
   const handleApprove = () => {
+    try{
       setIsApproving(true);
       approve();
+    } catch (e) {
+      console.error("Exception Thrown: ",e)
+      setIsApproving(false);
+    }
+
   };
 
   useEffect(() => {
@@ -65,10 +71,16 @@ const ConfirmStakeModal = ({ isOpen, onCloseModal, stakeAmount, contract }) => {
   }, [stakeFunctionStatus]);
 
   const stakeTokens = () => {
+    try{
       setIsStaking(true);
       const bigN = BigNumber.from(stakeAmount).mul(BigNumber.from(10).pow(18));
       const amountToStake = bigN.toString();
       void stake(amountToStake);
+    } catch (e) {
+      setIsStaking(false);
+      console.error(e)
+    }
+
   };
 
   return (
