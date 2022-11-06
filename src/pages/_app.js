@@ -9,7 +9,6 @@ import {
   CoinbaseWalletConnector,
 } from "@usedapp/core";
 import { getDefaultProvider } from "ethers";
-import { YantraDappProvider } from "../providers/YantraProvider/YantraDappProvider";
 
 const config = {
   readOnlyChainId: Goerli.chainId,
@@ -21,7 +20,6 @@ const config = {
     metamask: new MetamaskConnector(),
     coinbase: new CoinbaseWalletConnector(),
   },
-  refresh: 5,
   gasLimitBufferPercentage: 10,
 };
 
