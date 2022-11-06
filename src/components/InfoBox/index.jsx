@@ -3,7 +3,11 @@ import style from "./info-box.module.css";
 import Info1 from "../../assets/images/info_one.svg";
 import YantraSymbol from "../../assets/images/yantra-symbol.svg";
 
-const InfoBox = ({title, value=0}) => {
+const InfoBox = ({title, value=0, decimalPlaces}) => {
+
+  const parsedValue = (num) => {
+    return (+num).toFixed(decimalPlaces);
+  }
   return (
     <div className={style.container}>
       <div className={style.content}>
@@ -16,7 +20,7 @@ const InfoBox = ({title, value=0}) => {
             <img src={YantraSymbol.src} alt="" />
             <p>$YANTRA</p>
           </div>
-          <p>{value}</p>
+          <p>{parsedValue(value)}</p>
         </div>
         <div className={style.usdt_value}>USDT Value: $0,000.00</div>
       </div>

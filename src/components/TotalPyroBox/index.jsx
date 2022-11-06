@@ -4,6 +4,9 @@ import YantraSymbol from "../../assets/images/yantra-symbol.svg";
 import { formatUnits } from "ethers/lib/utils";
 
 const TotalPyroBox = ({totalTokens}) => {
+  const parsedValue = (num) => {
+    return (+num).toFixed(0);
+  }
   return (
     <div className={style.container}>
       <div className={style.content}>
@@ -12,7 +15,7 @@ const TotalPyroBox = ({totalTokens}) => {
         </div>
         <div className={style.info__value}>
           <img src={YantraSymbol.src} alt="" />
-          <p>{totalTokens ? formatUnits(totalTokens, 18) : "-"}</p>
+          <p>{totalTokens ? parsedValue(formatUnits(totalTokens, 18)) : "-"}</p>
         </div>
         <div className={style.usdt_value}>USDT Value: $0,000.00</div>
       </div>

@@ -66,13 +66,10 @@
   position: relative;
   @apply rounded-3xl w-full py-2 text-white nexa-reg-18 uppercase;
   z-index: 0;
-}
-
-.modal_dialog_buttons button:nth-child(1) {
   background: #F92032;
 }
 
-.modal_dialog_buttons button:nth-child(1)::before {
+.modal_dialog_buttons button:not(:disabled)::before {
   content: "";
   position: absolute;
   inset: 0;
@@ -90,10 +87,7 @@
   z-index: -1;
 }
 
-.modal_dialog_buttons button:nth-child(2) {
+.modal_dialog_buttons button[disabled] {
   @apply bg-black border-[#4D4D4D] border-2;
-}
-
-.modal_dialog_buttons button:nth-child(2)[disabled] {
   @apply opacity-90 text-[#4D4D4D];
 }

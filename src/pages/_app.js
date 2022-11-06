@@ -20,7 +20,8 @@ const config = {
   connectors: {
     metamask: new MetamaskConnector(),
     coinbase: new CoinbaseWalletConnector(),
-  }
+  },
+  refresh: 5
 };
 
 function MyApp({ Component, pageProps }) {

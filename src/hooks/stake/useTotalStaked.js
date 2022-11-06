@@ -1,5 +1,5 @@
 import { useCall } from "@usedapp/core";
-import { useStakeContract } from "./useContract";
+import { useStakeContract } from "../useContract";
 
 export const useTotalStaked = () => {
   const stakeContract = useStakeContract();

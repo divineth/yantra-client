@@ -1,8 +1,76 @@
-import React, { Fragment } from "react";
+import React, { useState, useEffect, Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import style from "./confirm-stake.module.css";
+import {
+  ApprovalState,
+  useApproveCallback,
+} from "../../hooks/useApproveCallback";
+import { BigNumber } from "ethers";
+import { useStakeTokens } from "../../hooks/stake/useStakeTokens";
+import { useRouter } from "next/router";
 
-const ConfirmStakeModal = ({ isOpen, onCloseModal }) => {
+const ConfirmStakeModal = ({ isOpen, onCloseModal, stakeAmount, contract }) => {
+
+  const router = useRouter()
+  const { send: stake, state: stakeState } = useStakeTokens();
+  const {
+    approvalState,
+    approve,
+    state: approveState,
+  } = useApproveCallback(stakeAmount, contract);
+  const [isApproving, setIsApproving] = useState(false);
+  const [isStaking, setIsStaking] = useState(false);
+
+  const [isApproved, setIsApproved] = useState(false);
+
+  const { status: approveFunctionStatus, errorMessage: approveFunctionError } =
+    approveState;
+  const { status: stakeFunctionStatus, errorMessage: stakeFunctionError } =
+    stakeState;
+
+  const handleApprove = () => {
+      setIsApproving(true);
+      approve();
+  };
+
+  useEffect(() => {
+    if (approvalState == ApprovalState.APPROVED) {
+      setIsApproved(true);
+    } else {
+      setIsApproved(false);
+    }
+  }, [approvalState]);
+
+  useEffect(() => {
+    if (approveFunctionStatus == "Success") {
+      alert("Tokens approved successfully");
+      setIsApproved(true);
+      setIsApproving(false);
+    } else if (approveFunctionStatus == "Fail" || approveFunctionStatus == "Exception") {
+      alert("Approval failed");
+      setIsApproved(false);
+      setIsApproving(false);
+    }
+  }, [approveFunctionStatus]);
+
+  useEffect(() => {
+    if (stakeFunctionStatus == "Success") {
+      alert("Successfully Staked");
+      setIsStaking(false);
+      router.reload();
+    } else if (stakeFunctionStatus == "Fail" || stakeFunctionStatus == "Exception") {
+      alert("Failed to stake");
+      setIsStaking(false);
+    }
+  }, [stakeFunctionStatus]);
+
+  const stakeTokens = () => {
+      setIsStaking(true);
+      const bigN = BigNumber.from(stakeAmount).mul(BigNumber.from(10).pow(18));
+      const amountToStake = bigN.toString();
+      void stake(amountToStake);
+  };
+
   return (
     <>
       <Transition appear show={isOpen} as={Fragment}>
@@ -63,8 +131,26 @@ const ConfirmStakeModal = ({ isOpen, onCloseModal }) => {
                     </p>
                   </div>
                   <div className={style.modal_dialog_buttons}>
-                    <button>Approve</button>
-                    <button disabled={true}>Stake</button>
+                    <button
+                      disabled={
+                        approvalState == ApprovalState.APPROVED ||
+                        isApproved ||
+                        isApproving
+                      }
+                      onClick={handleApprove}
+                    >
+                      Approve
+                    </button>
+                    <button
+                      disabled={
+                        approvalState != ApprovalState.APPROVED ||
+                        !isApproved ||
+                        isStaking
+                      }
+                      onClick={stakeTokens}
+                    >
+                      Stake
+                    </button>
                   </div>
                 </div>
               </div>
