@@ -13,7 +13,7 @@ export default function StakePage() {
   return (
     <>
       <InfoSection info={staker} pendingRewards={rewards} />
-      <Stake />
+      <Stake info={staker}/>
     </>
   );
 }

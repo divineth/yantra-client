@@ -41,15 +41,6 @@ function WalletManager({ isOpen, onCloseModal }) {
     }
   }, [account]);
 
-  useEffect(() => {
-    if(error){
-      setSelectedKey(-1);
-
-      alert(error);
-    }
-  }, [error])
-  
-
   const addressCopied = () => {
     setCopied(true);
     setTimeout(() => {

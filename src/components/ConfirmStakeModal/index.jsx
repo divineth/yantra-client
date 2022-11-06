@@ -5,13 +5,13 @@ import {
   ApprovalState,
   useApproveCallback,
 } from "../../hooks/useApproveCallback";
-import { BigNumber } from "ethers";
+import { 
+  utils } from "ethers";
 import { useStakeTokens } from "../../hooks/stake/useStakeTokens";
 import { useRouter } from "next/router";
 
 const ConfirmStakeModal = ({ isOpen, onCloseModal, stakeAmount, contract }) => {
-
-  const router = useRouter()
+  const router = useRouter();
   const { send: stake, state: stakeState } = useStakeTokens();
   const {
     approvalState,
@@ -23,20 +23,14 @@ const ConfirmStakeModal = ({ isOpen, onCloseModal, stakeAmount, contract }) => {
 
   const [isApproved, setIsApproved] = useState(false);
 
-  const { status: approveFunctionStatus, errorMessage: approveFunctionError } =
-    approveState;
-  const { status: stakeFunctionStatus, errorMessage: stakeFunctionError } =
-    stakeState;
-
   const handleApprove = () => {
-    try{
+    try {
       setIsApproving(true);
       approve();
     } catch (e) {
-      console.error("Exception Thrown: ",e)
+      console.error("Exception Thrown: ", e);
       setIsApproving(false);
     }
-
   };
 
   useEffect(() => {
@@ -45,42 +39,45 @@ const ConfirmStakeModal = ({ isOpen, onCloseModal, stakeAmount, contract }) => {
     } else {
       setIsApproved(false);
     }
-  }, [approvalState]);
+  }, [approvalState, approveState]);
 
   useEffect(() => {
-    if (approveFunctionStatus == "Success") {
+    if (isApproving && approveState.status == "Success") {
       alert("Tokens approved successfully");
       setIsApproved(true);
       setIsApproving(false);
-    } else if (approveFunctionStatus == "Fail" || approveFunctionStatus == "Exception") {
+    } else if (
+      isApproving &&
+      (approveState.status == "Fail" || approveState.status == "Exception")
+    ) {
       alert("Approval failed");
       setIsApproved(false);
       setIsApproving(false);
     }
-  }, [approveFunctionStatus]);
+  }, [approveState]);
 
   useEffect(() => {
-    if (stakeFunctionStatus == "Success") {
+    if (isStaking && stakeState.status == "Success") {
       alert("Successfully Staked");
       setIsStaking(false);
       router.reload();
-    } else if (stakeFunctionStatus == "Fail" || stakeFunctionStatus == "Exception") {
+    } else if (
+      isStaking &&
+      (stakeState.status == "Fail" || stakeState.status == "Exception")
+    ) {
       alert("Failed to stake");
       setIsStaking(false);
     }
-  }, [stakeFunctionStatus]);
+  }, [stakeState]);
 
   const stakeTokens = () => {
-    try{
+    try {
       setIsStaking(true);
-      const bigN = BigNumber.from(stakeAmount).mul(BigNumber.from(10).pow(18));
-      const amountToStake = bigN.toString();
-      void stake(amountToStake);
+      void stake(utils.parseUnits(stakeAmount, 18));
     } catch (e) {
       setIsStaking(false);
-      console.error(e)
+      console.error(e);
     }
-
   };
 
   return (

@@ -1,5 +1,5 @@
 import { useContractFunction } from "@usedapp/core";
-import { useStakeContract } from "./useContract";
+import { useStakeContract } from "../useContract";
 
 export const useUnstakeTokens = () => {
   const contract = useStakeContract();
