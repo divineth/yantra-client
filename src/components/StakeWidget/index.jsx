@@ -62,7 +62,7 @@ const StakeWidget = ({ stakedTokens }) => {
   };
 
   const setMaxValue = () => {
-    setAmount((+formattedBalance).toFixed(0));
+    setAmount((+formattedBalance).toFixed(4));
     setSliderValue(100);
   };
 
@@ -71,7 +71,7 @@ const StakeWidget = ({ stakedTokens }) => {
     if (balance) {
       const val = BigNumber.from(balance.mul(value).div(100));
       const res = formatUnits(val, 18);
-      setAmount((+res).toFixed(0));
+      setAmount((+res).toFixed(4));
     }
   };
 
