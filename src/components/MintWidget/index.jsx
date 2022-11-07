@@ -4,27 +4,19 @@ import NFTPlaceholder from "../../assets/images/yantra-nft-placeholder.jpg";
 import CustomSlider from "../CustomSlider";
 import WalletManager from "../WalletManager";
 import { useEthers } from "@usedapp/core";
+import { useNFTStatus } from "../../hooks/mint/useNFTStatus";
+import { formatUnits } from "ethers/lib/utils";
+import { BigNumber } from "ethers";
+import { useWalletMints } from "../../hooks/mint/useWalletMints";
+import { onInputNumberChange } from "../../utils/utils";
+import { useMintNFT } from "../../hooks/mint/useMintNFT";
+import SpinnerAlt from "../../assets/images/spinner-alt.svg";
+import { useRouter } from "next/router";
 
 const marks = [
   {
-    value: 0,
-    label: "0",
-  },
-  {
-    value: 2,
-    label: "2",
-  },
-  {
-    value: 4,
-    label: "4",
-  },
-  {
-    value: 6,
-    label: "6",
-  },
-  {
-    value: 8,
-    label: "8",
+    value: 1,
+    label: "1",
   },
   {
     value: 10,
@@ -34,11 +26,83 @@ const marks = [
 
 const MintWidget = () => {
   const { account } = useEthers();
+  const router = useRouter();
 
   const [walletModalOpen, setWalletModalOpen] = useState(false);
+  const [nftAmount, setNftAmount] = useState(1);
+  const [sliderValue, setSliderValue] = useState(0);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [isMinting, setIsMinting] = useState(false);
+
+  const saleStatus = useNFTStatus();
+  const walletMints = useWalletMints(account);
+
+  const { send: mintNFT, state: mintNFTState } = useMintNFT();
+
+  const handleNFTAmountChange = (value) => {
+    setSliderValue(1);
+    setNftAmount(value);
+  };
+
+  const checkRoundClosed = () => {
+    if(!saleStatus) return;
+
+    return BigNumber.from(saleStatus?._roundSupply).eq(saleStatus?._roundLimit);
+  }
+
+  useEffect(() => {
+    if (isMinting && mintNFTState.status == "Success") {
+      alert("NFT Minted Successfully");
+      setIsMinting(false);
+      router.reload();
+    } else if (
+      isMinting &&
+      (mintNFTState.status == "Fail" || mintNFTState.status == "Exception")
+    ) {
+      alert("Failed to mint NFTs");
+      setIsMinting(false);
+    }
+  }, [mintNFTState]);
+
+  const handleMintNFT = () => {
+    setIsMinting(true);
+    const price = saleStatus?._mintPrice
+      ? BigNumber.from(saleStatus?._mintPrice).mul(
+          nftAmount > 0 ? nftAmount : 0
+        )
+      : 0;
+    try {
+      void mintNFT(BigNumber.from(nftAmount), { value: price.toString() });
+    } catch (e) {
+      console.error("Exception Thrown: ", e);
+      setIsMinting(false);
+    }
+  };
+
+  useEffect(() => {
+    if (account) {
+      if (nftAmount <= 0) {
+        setErrorMessage("Enter the number of NFTs to mint");
+      } else if (nftAmount > 10) {
+        setErrorMessage("Max mint amount exceeded");
+      } else {
+        setErrorMessage("");
+      }
+    }
+  }, [nftAmount]);
 
   const closeWalletModal = () => {
     setWalletModalOpen(false);
+  };
+
+  const setMaxValue = () => {
+    setNftAmount(10);
+    setSliderValue(10);
+  };
+
+  const setNFTAmountValue = (value) => {
+    setSliderValue(value);
+    setNftAmount(value);
   };
 
   return (
@@ -51,7 +115,14 @@ const MintWidget = () => {
           </p>
           {account != undefined && (
             <p>
-              <span className="text-[#FB2032]">Round Details:</span> 0 / 500
+              <span className="text-[#FB2032]">Round Details:</span>{" "}
+              {saleStatus
+                ? BigNumber.from(saleStatus?._roundSupply).toString()
+                : "-"}{" "}
+              /{" "}
+              {saleStatus
+                ? BigNumber.from(saleStatus?._roundLimit).toString()
+                : "-"}
             </p>
           )}
         </div>
@@ -63,8 +134,19 @@ const MintWidget = () => {
               <h3>Not Connected</h3>
             ) : (
               <div className="flex flex-col items-end">
-                <h3>0.06ETH</h3>
-                <h3>Total Minted: 0</h3>
+                <h3>
+                  {saleStatus ? formatUnits(saleStatus?._mintPrice) : "-"}ETH
+                </h3>
+                <h3>
+                  Max Per Mint:{" "}
+                  {saleStatus
+                    ? BigNumber.from(saleStatus?._maxPerTx).toString()
+                    : "-"}
+                </h3>
+                <h3>
+                  Total Minted:{" "}
+                  {walletMints ? BigNumber.from(walletMints).toString() : "-"}
+                </h3>
               </div>
             )}
           </div>
@@ -72,20 +154,43 @@ const MintWidget = () => {
         <div className={style.mint__form}>
           <div className={style.mint__price}>
             <h3>Amount</h3>
-            <h3>Price: 0.06ETH</h3>
+            <h3>
+              Price:{" "}
+              {saleStatus
+                ? nftAmount < 0 || nftAmount > 10
+                  ? "0"
+                  : Number(
+                      formatUnits(
+                        BigNumber.from(saleStatus?._mintPrice).mul(
+                          nftAmount > 0 ? nftAmount : 0
+                        )
+                      )
+                    )
+                : "-"}
+              ETH
+            </h3>
           </div>
-          <input type="text" />
+          <input
+            type="text"
+            value={nftAmount}
+            onChange={(e) => onInputNumberChange(e, handleNFTAmountChange)}
+          />
+          <p className="pt-1 nexa-reg-15 text-red-600">{errorMessage}</p>
           <div className={style.mint__slider}>
             <CustomSlider
               aria-label="amount"
               defaultValue={0}
               valueLabelDisplay="auto"
               step={1}
-              min={0}
+              min={1}
               max={10}
               marks={marks}
+              value={sliderValue}
+              onChange={(e) => {
+                setNFTAmountValue(e.target.value);
+              }}
             />
-            <button>Max</button>
+            <button onClick={setMaxValue}>Max</button>
           </div>
         </div>
         <div className={style.mint__buttons}>
@@ -98,7 +203,14 @@ const MintWidget = () => {
               Connect Wallet
             </button>
           ) : (
-            <button>Mint NFT</button>
+            <button
+              disabled={nftAmount <= 0 || nftAmount > 10 || isMinting || checkRoundClosed()}
+              onClick={handleMintNFT}
+              className="flex justify-center items-center gap-1"
+            >
+              {checkRoundClosed() ? "Round Closed" : "Mint NFT"}
+              {isMinting && <img className="w-6" src={SpinnerAlt.src} alt="" />}
+            </button>
           )}
         </div>
       </div>

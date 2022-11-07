@@ -1,10 +1,11 @@
 import { utils } from 'ethers';
 import { Contract } from "@ethersproject/contracts";
 import { useEthers } from '@usedapp/core';
-import { STAKE_ADDRESS, TOKEN_ADDRESS, YANTRA_ETH_PAIR } from '../constants/address';
+import { NFT_ADDRESS, STAKE_ADDRESS, TOKEN_ADDRESS, YANTRA_ETH_PAIR } from '../constants/address';
 import STAKE_ABI from '../contracts/SRI.json';
 import ERC20ABI from '../contracts/ERC20ABI.json';
 import UniswapV2 from '../contracts/UniswapV2.json';
+import NFT_ABI from '../contracts/VoiNFT.json';
 
 export function useTokenContract(){
     return new Contract(TOKEN_ADDRESS, new utils.Interface(ERC20ABI));
@@ -20,5 +21,9 @@ export function useEthUSDTContract(){
 
 export function useStakeContract() {
     const { chainId } = useEthers();
-    return new Contract(STAKE_ADDRESS[5], new utils.Interface(STAKE_ABI.abi));
+    return new Contract(STAKE_ADDRESS[1337], new utils.Interface(STAKE_ABI.abi));
+}
+
+export function useNFTContract() {
+    return new Contract(NFT_ADDRESS, new utils.Interface(NFT_ABI.abi));
 }

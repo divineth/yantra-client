@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { useContractFunction, useEthers } from "@usedapp/core";
 import { useStakeContract } from "../useContract";
 

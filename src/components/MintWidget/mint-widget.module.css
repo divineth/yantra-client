@@ -74,18 +74,10 @@
   position: relative;
   @apply rounded-3xl w-80 py-2 text-white nexa-reg-18 uppercase;
   z-index: 0;
+  background: #F92032;
 }
 
-.mint__buttons button:nth-child(1) {
-  background: linear-gradient(
-    342.71deg,
-    #f9d207 -93.29%,
-    #f92032 64.35%,
-    #f92032 108.81%
-  );
-}
-
-.mint__buttons button:nth-child(1)::before {
+.mint__buttons button:not(:disabled)::before {
   content: "";
   position: absolute;
   inset: 0;
@@ -103,6 +95,7 @@
   z-index: -1;
 }
 
-.mint__buttons button:nth-child(2) {
+.mint__buttons button[disabled] {
   @apply bg-black border-[#4D4D4D] border-2;
+  @apply opacity-90 text-[#4D4D4D];
 }
