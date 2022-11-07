@@ -40,7 +40,7 @@ const ConfirmStakeModal = ({ isOpen, onCloseModal, stakeAmount, contract }) => {
     } else {
       setIsApproved(false);
     }
-  }, [approvalState, approveState]);
+  }, [approvalState]);
 
   useEffect(() => {
     if (isApproving && approveState.status == "Success") {
@@ -143,7 +143,7 @@ const ConfirmStakeModal = ({ isOpen, onCloseModal, stakeAmount, contract }) => {
                   <div className={style.modal_dialog_buttons}>
                     <button
                       disabled={
-                        approvalState == ApprovalState.APPROVED ||
+                        // approvalState == ApprovalState.APPROVED ||
                         isApproved ||
                         isApproving
                       }
@@ -155,7 +155,7 @@ const ConfirmStakeModal = ({ isOpen, onCloseModal, stakeAmount, contract }) => {
                     </button>
                     <button
                       disabled={
-                        approvalState != ApprovalState.APPROVED ||
+                        // approvalState != ApprovalState.APPROVED ||
                         !isApproved ||
                         isStaking
                       }
