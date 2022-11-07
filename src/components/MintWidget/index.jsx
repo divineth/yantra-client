@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import style from "./mint-widget.module.css";
 import NFTPlaceholder from "../../assets/images/yantra-nft-placeholder.jpg";
 import CustomSlider from "../CustomSlider";
+import WalletManager from "../WalletManager";
+import { useEthers } from "@usedapp/core";
 
 const marks = [
   {
@@ -31,6 +33,14 @@ const marks = [
 ];
 
 const MintWidget = () => {
+  const { account } = useEthers();
+
+  const [walletModalOpen, setWalletModalOpen] = useState(false);
+
+  const closeWalletModal = () => {
+    setWalletModalOpen(false);
+  };
+
   return (
     <div className={style.container}>
       <div className={style.content}>
@@ -39,18 +49,30 @@ const MintWidget = () => {
           <p>
             <span className="text-[#FB2032]">Total Supply:</span> 5000
           </p>
+          {account != undefined && (
+            <p>
+              <span className="text-[#FB2032]">Round Details:</span> 0 / 500
+            </p>
+          )}
         </div>
         <div className={style.mint__info}>
           <img src={NFTPlaceholder.src} alt="" />
           <div className={style.mint__info__text}>
             <p>Price Per $YANTRA NFT</p>
-            <h3>Not Connected</h3>
+            {account == undefined ? (
+              <h3>Not Connected</h3>
+            ) : (
+              <div className="flex flex-col items-end">
+                <h3>0.06ETH</h3>
+                <h3>Total Minted: 0</h3>
+              </div>
+            )}
           </div>
         </div>
         <div className={style.mint__form}>
           <div className={style.mint__price}>
-            <h3>Price</h3>
-            <h3>0.06ETH</h3>
+            <h3>Amount</h3>
+            <h3>Price: 0.06ETH</h3>
           </div>
           <input type="text" />
           <div className={style.mint__slider}>
@@ -67,9 +89,20 @@ const MintWidget = () => {
           </div>
         </div>
         <div className={style.mint__buttons}>
-          <button>Connect Wallet</button>
+          {account == undefined ? (
+            <button
+              onClick={() => {
+                setWalletModalOpen(true);
+              }}
+            >
+              Connect Wallet
+            </button>
+          ) : (
+            <button>Mint NFT</button>
+          )}
         </div>
       </div>
+      <WalletManager isOpen={walletModalOpen} onCloseModal={closeWalletModal} />
     </div>
   );
 };

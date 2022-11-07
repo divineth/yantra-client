@@ -35,7 +35,7 @@
 }
 
 .mint__info__text {
-  @apply flex flex-col items-end gap-2;
+  @apply flex flex-col items-end gap-2 text-right;
 }
 
 .mint__info__text p {
