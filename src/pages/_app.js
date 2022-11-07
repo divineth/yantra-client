@@ -13,7 +13,7 @@ import { getDefaultProvider } from "ethers";
 const config = {
   readOnlyChainId: Goerli.chainId,
   readOnlyUrls: {
-    [Mainnet.chainId]: getDefaultProvider("mainnet"),
+    // [Mainnet.chainId]: getDefaultProvider("mainnet"),
     [Goerli.chainId]: getDefaultProvider("goerli"),
   },
   connectors: {

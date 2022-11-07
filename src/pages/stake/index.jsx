@@ -3,7 +3,7 @@ import Stake from "../../components/Stake";
 import { useEthers } from "@usedapp/core";
 import { useStakerInfo } from "../../hooks/stake/useStakerInfo";
 import { usePendingRewards } from "../../hooks/stake/usePendingRewards";
-import { TOKEN_ADDRESS } from "../../constants/address";
+
 
 export default function StakePage() {
   const { account } = useEthers();

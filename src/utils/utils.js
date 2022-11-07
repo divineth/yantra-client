@@ -15,6 +15,10 @@ export function onInputNumberChange(e, f) {
 export function compareNonTokenWithToken(tokenValue, nonTokenValue, decimals) {
   const convertedValue = utils.parseUnits(nonTokenValue, decimals);
 
+  if (tokenValue == undefined) {
+    return;
+  }
+
   if (BigNumber.from(tokenValue).lt(convertedValue)) {
     return -1;
   } else if (BigNumber.from(tokenValue).gt(convertedValue)) {
