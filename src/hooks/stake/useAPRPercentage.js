@@ -1,4 +1,4 @@
-import { useCall } from "@usedapp/core";
+import { Mumbai, useCall } from "@usedapp/core";
 import { useStakeContract } from "../useContract";
 
 export const useAPRPercentage = () => {
@@ -11,7 +11,7 @@ export const useAPRPercentage = () => {
         method: "getAPRPercentage",
         args: [1],
       },
-      { refresh: "never", isStatic: true }
+      { refresh: "never", isStatic: true, chainId: Mumbai.chainId }
     ) ?? {};
 
   if (error) {

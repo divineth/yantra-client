@@ -1,4 +1,4 @@
-import { useCall } from "@usedapp/core";
+import { Mumbai, useCall } from "@usedapp/core";
 import { useStakeContract } from "../useContract";
 
 export const useTotalStaked = () => {
@@ -11,7 +11,7 @@ export const useTotalStaked = () => {
         method: "totalStakedTokens",
         args: [],
       },
-      { refresh: 10 }
+      { refresh: 10, chainId: Mumbai.chainId }
     ) ?? {};
 
   if (error) {
