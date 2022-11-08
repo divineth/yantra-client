@@ -12,6 +12,7 @@ import { onInputNumberChange } from "../../utils/utils";
 import { useMintNFT } from "../../hooks/mint/useMintNFT";
 import SpinnerAlt from "../../assets/images/spinner-alt.svg";
 import { useRouter } from "next/router";
+import { useYantraDapp } from "../../providers/YantraProvider/YantraDappProvider";
 
 const marks = [
   {
@@ -33,6 +34,8 @@ const MintWidget = () => {
   const [sliderValue, setSliderValue] = useState(0);
   const [errorMessage, setErrorMessage] = useState("");
   const [isMinting, setIsMinting] = useState(false);
+
+  const { isChainError } = useYantraDapp();
 
   const saleStatus = useNFTStatus();
   const walletMints = useWalletMints(account);
@@ -204,7 +207,7 @@ const MintWidget = () => {
             </button>
           ) : (
             <button
-              disabled={nftAmount <= 0 || nftAmount > 10 || isMinting || checkRoundClosed()}
+              disabled={nftAmount <= 0 || nftAmount > 10 || isMinting || checkRoundClosed() || isChainError}
               onClick={handleMintNFT}
               className="flex justify-center items-center gap-1"
             >

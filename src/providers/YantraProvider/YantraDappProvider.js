@@ -1,21 +1,23 @@
 import React, { useEffect, useState } from "react";
-import { useEthers } from "@usedapp/core";
+import { Localhost, useEthers } from "@usedapp/core";
 import YantraDappContext from "./context";
 
 function YantraDappProvider({ children }) {
-  const { account } = useEthers();
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const { account, chainId } = useEthers();
+  const [isChainError, setIsChainError] = useState(false);
 
   useEffect(() => {
-    if (account != undefined) {
-      setIsAuthenticated(true);
-    } else {
-      setIsAuthenticated(false);
+    if (account != undefined && chainId != undefined) {
+      if (chainId != Localhost.chainId) {
+        setIsChainError(true);
+      } else {
+        setIsChainError(false);
+      }
     }
-  }, [account]);
+  }, [account, chainId]);
 
   return (
-    <YantraDappContext.Provider value={{ isAuthenticated }}>
+    <YantraDappContext.Provider value={{ isChainError }}>
       {children}
     </YantraDappContext.Provider>
   );

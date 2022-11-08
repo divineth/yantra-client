@@ -16,6 +16,7 @@ import WalletManager from "../WalletManager";
 import { useUnstakeTokens } from "../../hooks/stake/useUnstakeTokens";
 
 import SpinnerAlt from "../../assets/images/spinner-alt.svg";
+import { useYantraDapp } from "../../providers/YantraProvider/YantraDappProvider";
 
 const StakeWidget = ({ stakedTokens }) => {
   const { account } = useEthers();
@@ -30,6 +31,8 @@ const StakeWidget = ({ stakedTokens }) => {
   const [walletModalOpen, setWalletModalOpen] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [isUnstaking, setIsUnstaking] = useState(false);
+
+  const {isChainError} = useYantraDapp();
 
   const { send: unstakeToken, state: unstakeState } = useUnstakeTokens();
 
@@ -177,7 +180,7 @@ const StakeWidget = ({ stakedTokens }) => {
                 disabled={
                   amount <= 0 ||
                   compareNonTokenWithToken(balance, amount, 18) == -1 ||
-                  isUnstaking
+                  isUnstaking || isChainError
                 }
               >
                 Stake
@@ -187,7 +190,7 @@ const StakeWidget = ({ stakedTokens }) => {
                   amount <= 0 ||
                   compareNonTokenWithToken(balance, amount, 18) == -1 ||
                   compareNonTokenWithToken(stakedTokens, amount, 18) == -1 ||
-                  isUnstaking
+                  isUnstaking || isChainError
                 }
                 onClick={handleUnstakeToken}
                 className="flex justify-center items-center gap-1"
