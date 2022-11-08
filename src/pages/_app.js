@@ -38,6 +38,9 @@ const config = {
     [Mumbai.chainId]: "0x08411ADd0b5AA8ee47563b146743C13b3556c9Cc",
   },
   gasLimitBufferPercentage: 20,
+  autoConnect: true,
+  networks: [Mumbai],
+  noMetamaskDeactivate: true,
 };
 
 function MyApp({ Component, pageProps }) {

@@ -5,11 +5,11 @@ import style from "./navbar.module.css";
 import WalletManager from "../WalletManager";
 import { Popover } from "@headlessui/react";
 import { Bars3Icon } from "@heroicons/react/20/solid";
-import { Mumbai, shortenIfAddress, useEthers } from "@usedapp/core";
+import { Mumbai, shortenIfAddress, useEthers, useConnector } from "@usedapp/core";
 import { useYantraDapp } from "../../providers/YantraProvider/YantraDappProvider";
 
 const Navbar = () => {
-  const { account, switchNetwork } = useEthers();
+  const { account } = useEthers();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const {isChainError} = useYantraDapp();
 
@@ -21,9 +21,9 @@ const Navbar = () => {
     setIsDialogOpen(true);
   }
 
-  const handleNetworkSwitch = async() => {
-    await switchNetwork(Mumbai.chainId);
-  }
+  // const handleNetworkSwitch = async() => {
+  //   await switchNetwork(Mumbai.chainId);
+  // }
 
   return (
     <>
@@ -85,7 +85,7 @@ const Navbar = () => {
         <WalletManager isOpen={isDialogOpen} onCloseModal={closeModal} />
       </div>
       {isChainError && (<div className="flex justify-center items-center bg-red-700 text-white nexa-reg-20 py-2">
-        Connected wallet does not match the target network.<span className="cursor-pointer ml-2 underline" onClick={handleNetworkSwitch}>Switch Network</span>
+        You're connected to the wrong network. Switch to Polygon Testnet to use the app.
       </div>)}
     </>
   );
