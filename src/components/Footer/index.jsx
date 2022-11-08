@@ -13,10 +13,10 @@ const Footer = () => {
         </div>
         <div className={style.footer__right}>
           <div className={style.socials}>
-            <a href="https://t.me/PyroToken" target="_blank" rel="noreferrer">
+            <a href="https://t.me/YANTRAPortal" target="_blank" rel="noreferrer">
               <img src={Telegram.src} alt="" />
             </a>
-            <a href="https://twitter.com/PyroTokenErc" target="_blank" rel="noreferrer">
+            <a href="https://twitter.com/YANTRA999" target="_blank" rel="noreferrer">
               <img src={Twitter.src} alt="" />
             </a>
           </div>
