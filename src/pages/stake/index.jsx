@@ -3,6 +3,7 @@ import Stake from "../../components/Stake";
 import { useEthers } from "@usedapp/core";
 import { useStakerInfo } from "../../hooks/stake/useStakerInfo";
 import { usePendingRewards } from "../../hooks/stake/usePendingRewards";
+import Head from "next/head";
 
 
 export default function StakePage() {
@@ -12,6 +13,9 @@ export default function StakePage() {
 
   return (
     <>
+    <Head>
+      <title>$YANTRA | SRI</title>
+    </Head>
       <InfoSection info={staker} pendingRewards={rewards} />
       <Stake info={staker}/>
     </>
