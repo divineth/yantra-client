@@ -16,6 +16,7 @@
     "@mui/material": "^5.10.12",
     "@mui/styles": "^5.10.10",
     "@usedapp/core": "^1.2.1",
+    "@usedapp/wallet-connect-connector": "^1.0.1",
     "date-fns": "^2.29.3",
     "ethers": "^5.7.2",
     "next": "13.0.1",

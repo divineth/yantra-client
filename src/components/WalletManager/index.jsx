@@ -22,7 +22,7 @@ const providers = [
     icon: Coinbase.src,
   },
   {
-    options: { type: "metamask" },
+    options: { type: "walletConnect" },
     displayName: "WalletConnect",
     icon: WalletConnect.src,
   },
@@ -35,6 +35,13 @@ function WalletManager({ isOpen, onCloseModal }) {
   const [selectedKey, setSelectedKey] = useState(-1);
 
   const [copied, setCopied] = useState(false);
+  const [hasCoinbaseWallet, setHasCoinbaseWallet] = useState(false);
+
+  useEffect(() => {
+    if (window.walletLinkExtension != null) {
+      setHasCoinbaseWallet(true);
+    }
+  }, []);
 
   useEffect(() => {
     if (account && isLoading) {
@@ -51,6 +58,12 @@ function WalletManager({ isOpen, onCloseModal }) {
 
   const handleConnectWallet = (options, key) => {
     setSelectedKey(key);
+    if (key == 1 && !hasCoinbaseWallet) {
+      alert(
+        `Coinbase wallet is not installed - you can get it from 'https://www.coinbase.com/wallet'`
+      );
+      return;
+    }
     try {
       activateBrowserWallet(options);
     } catch (e) {

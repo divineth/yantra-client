@@ -10,6 +10,7 @@ import {
   Localhost,
   Mumbai,
 } from "@usedapp/core";
+import { WalletConnectConnector } from "@usedapp/wallet-connect-connector";
 import { getDefaultProvider } from "ethers";
 import { YantraDappProvider } from "../providers/YantraProvider/YantraDappProvider";
 
@@ -19,11 +20,18 @@ const config = {
     // [Mainnet.chainId]: getDefaultProvider("mainnet"),
     // [Goerli.chainId]: getDefaultProvider("goerli"),
     // [Localhost.chainId]: "http://127.0.0.1:7545",
-    [Mumbai.chainId]: "https://polygon-mumbai.g.alchemy.com/v2/fgk6Oa3fc9bndH31q-ahB6HwPRK25-mP"
+    [Mumbai.chainId]:
+      "https://polygon-mumbai.g.alchemy.com/v2/fgk6Oa3fc9bndH31q-ahB6HwPRK25-mP",
   },
   connectors: {
     metamask: new MetamaskConnector(),
     coinbase: new CoinbaseWalletConnector(),
+    walletConnect: new WalletConnectConnector({
+      rpc: {
+        [Mumbai.chainId]:
+          "https://polygon-mumbai.g.alchemy.com/v2/fgk6Oa3fc9bndH31q-ahB6HwPRK25-mP",
+      },
+    }),
   },
   multicallVersion: 1,
   multicallAddresses: {
