@@ -3,7 +3,7 @@ import style from "./stake-widget.module.css";
 import CustomSlider from "../CustomSlider";
 import ConfirmStakeModal from "../ConfirmStakeModal";
 import { useStakeContract } from "../../hooks/useContract";
-import { useEthers, useTokenBalance } from "@usedapp/core";
+import { Mumbai, useEthers, useTokenBalance } from "@usedapp/core";
 import { TOKEN_ADDRESS } from "../../constants/address";
 import { formatUnits, parseUnits } from "ethers/lib/utils";
 import {
@@ -23,7 +23,7 @@ const StakeWidget = ({ stakedTokens }) => {
   const [modalOpen, setModalOpen] = useState(false);
   const [amount, setAmount] = useState(0);
   const stakeContract = useStakeContract();
-  const balance = useTokenBalance(TOKEN_ADDRESS, account);
+  const balance = useTokenBalance(TOKEN_ADDRESS[Mumbai.chainId], account);
 
   const [formattedBalance, setFormattedBalance] = useState(0);
   const [sliderValue, setSliderValue] = useState(0);

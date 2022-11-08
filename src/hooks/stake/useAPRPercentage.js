@@ -11,7 +11,7 @@ export const useAPRPercentage = () => {
         method: "getAPRPercentage",
         args: [1],
       },
-      { refresh: "never" }
+      { refresh: "never", isStatic: true }
     ) ?? {};
 
   if (error) {

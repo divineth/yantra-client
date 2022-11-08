@@ -11,7 +11,7 @@ export const useWalletMints = (userAddress) => {
           contract: nftContract,
           method: "walletMints",
           args: [userAddress],
-        },
+        }, {refresh: 10}
     ) ?? {};
 
   if (error) {

@@ -25,6 +25,10 @@ const config = {
     metamask: new MetamaskConnector(),
     coinbase: new CoinbaseWalletConnector(),
   },
+  multicallVersion: 1,
+  multicallAddresses: {
+    [Mumbai.chainId]: "0x08411ADd0b5AA8ee47563b146743C13b3556c9Cc",
+  },
   gasLimitBufferPercentage: 20,
 };
 

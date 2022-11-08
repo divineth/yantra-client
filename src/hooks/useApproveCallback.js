@@ -1,4 +1,5 @@
 import {
+  Mumbai,
   useContractFunction,
   useEthers,
   useTokenAllowance,
@@ -21,7 +22,7 @@ export function useApproveCallback(amountToApprove, spender) {
   const tokenAllowance = useTokenAllowance(
     tokenContract.address,
     account,
-    stakeContract.address
+    stakeContract.address, {chainId: Mumbai.chainId}
   );
 
   const approvalState = useMemo(() => {

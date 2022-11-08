@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Localhost, useEthers } from "@usedapp/core";
+import { Localhost, Mumbai, useEthers } from "@usedapp/core";
 import YantraDappContext from "./context";
 
 function YantraDappProvider({ children }) {
@@ -8,7 +8,7 @@ function YantraDappProvider({ children }) {
 
   useEffect(() => {
     if (account != undefined && chainId != undefined) {
-      if (chainId != Localhost.chainId) {
+      if (chainId != Mumbai.chainId) {
         setIsChainError(true);
       } else {
         setIsChainError(false);
