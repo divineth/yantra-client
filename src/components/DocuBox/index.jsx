@@ -10,7 +10,7 @@ const DocuBox = ({apr}) => {
         <div className={style.info__header}>
           <p className={style.info__title}>More Info</p>
           <a
-            href="https://etherscan.io/token/0x89568569da9c83cb35e59f92f5df2f6ca829eeee"
+            href="https://etherscan.io/token/0xd55231b619Ec464347d7b6eB12Cc7AE19fBbf37D"
             target="_blank"
             rel="noreferrer"
             className={style.info__link}
@@ -23,7 +23,7 @@ const DocuBox = ({apr}) => {
           <div className={style.body__content}>
             <p>Yantra Staking Instructions</p>
             <a
-              href="https://pyrodapp.com"
+              href="https://yantra-dapp.netlify.app"
               target="_blank"
               rel="noreferrer"
               className={style.info__link}
