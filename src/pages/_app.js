@@ -27,10 +27,15 @@ const config = {
     metamask: new MetamaskConnector(),
     coinbase: new CoinbaseWalletConnector(),
     walletConnect: new WalletConnectConnector({
+      chainId: Mainnet.chainId,
       rpc: {
+        [Mainnet.chainId]:
+          "https://mainnet.infura.io/v3/d8df2cb7844e4a54ab0a782f608749dd",
         [Mumbai.chainId]:
           "https://polygon-mumbai.g.alchemy.com/v2/fgk6Oa3fc9bndH31q-ahB6HwPRK25-mP",
       },
+
+      // infuraId: 'd8df2cb7844e4a54ab0a782f608749dd'
     }),
   },
   multicallVersion: 1,

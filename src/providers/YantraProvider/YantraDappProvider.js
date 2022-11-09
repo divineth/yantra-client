@@ -54,6 +54,12 @@ function YantraDappProvider({ children }) {
     }
   }, [account, chainId]);
 
+  useEffect(() => {
+    if (isChainError && account == undefined) {
+      setIsChainError(false);
+    }
+  }, [isChainError, account]);
+
   return (
     <YantraDappContext.Provider value={{ isChainError }}>
       {children}
