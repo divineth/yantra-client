@@ -1,5 +1,4 @@
 import {
-  Mumbai,
   useContractFunction,
   useEthers,
   useTokenAllowance,
@@ -22,7 +21,7 @@ export function useApproveCallback(amountToApprove, spender) {
   const tokenAllowance = useTokenAllowance(
     tokenContract.address,
     account,
-    stakeContract.address, {chainId: Mumbai.chainId}
+    stakeContract.address
   );
 
   const approvalState = useMemo(() => {
@@ -42,5 +41,5 @@ export function useApproveCallback(amountToApprove, spender) {
     send(spender, utils.parseUnits(amountToApprove, 18));
   };
 
-  return {approvalState, approve, state};
+  return { approvalState, approve, state };
 }

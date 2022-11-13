@@ -1,24 +1,42 @@
 import React, { useEffect, useState } from "react";
-import { ChainId, Mumbai, useEthers, useUpdateConfig } from "@usedapp/core";
+import { ChainId, Mainnet, useEthers, useUpdateConfig } from "@usedapp/core";
 import YantraDappContext from "./context";
+import {
+  useEthUSDTContract,
+  useYantraEthContract,
+} from "../../hooks/useContract";
+import { usePrice } from "../../hooks/usePrice";
 
 function YantraDappProvider({ children }) {
   const { account, chainId, library } = useEthers();
   const updateConfig = useUpdateConfig();
   const [isChainError, setIsChainError] = useState(false);
+  const [prices, setPrices] = useState({});
+
+  const yantraEthContract = useYantraEthContract();
+  const ethUSDTContract = useEthUSDTContract();
+  const ethValue = usePrice(yantraEthContract, false, 18);
+  const usdtValue = usePrice(ethUSDTContract, true, 12);
 
   // switch to the connectors provider whenever the account is changed
   // help to reduce the number of calls to the alchemy node
   // needs further testing
+
+  useEffect(() => {
+    setPrices({
+      ethValue: ethValue,
+      usdtValue: usdtValue,
+    });
+  }, [usdtValue]);
+
   useEffect(() => {
     try {
       if (account != undefined && library != undefined) {
-        updateConfig({ readOnlyUrls: { [ChainId.Mumbai]: library } });
+        updateConfig({ readOnlyUrls: { [ChainId.Mainnet]: library } });
       } else {
         updateConfig({
           readOnlyUrls: {
-            [ChainId.Mumbai]:
-              "https://polygon-mumbai.g.alchemy.com/v2/fgk6Oa3fc9bndH31q-ahB6HwPRK25-mP",
+            [ChainId.Mainnet]: process.env.NEXT_PUBLIC_MAINNET_RPC_URL,
           },
         });
       }
@@ -26,8 +44,7 @@ function YantraDappProvider({ children }) {
       console.error("Provider switch failed. Going back to alchemy: ", e);
       updateConfig({
         readOnlyUrls: {
-          [ChainId.Mumbai]:
-            "https://polygon-mumbai.g.alchemy.com/v2/fgk6Oa3fc9bndH31q-ahB6HwPRK25-mP",
+          [ChainId.Mainnet]: process.env.NEXT_PUBLIC_MAINNET_RPC_URL,
         },
       });
     }
@@ -35,19 +52,18 @@ function YantraDappProvider({ children }) {
 
   useEffect(() => {
     if (account != undefined && chainId != undefined) {
-      if (chainId != Mumbai.chainId) {
+      if (chainId != Mainnet.chainId) {
         setIsChainError(true);
         updateConfig({
           readOnlyUrls: {
-            [ChainId.Mumbai]:
-              "https://polygon-mumbai.g.alchemy.com/v2/fgk6Oa3fc9bndH31q-ahB6HwPRK25-mP",
+            [ChainId.Mainnet]: process.env.NEXT_PUBLIC_MAINNET_RPC_URL,
           },
         });
       } else {
         setIsChainError(false);
         updateConfig({
           readOnlyUrls: {
-            [ChainId.Mumbai]: library,
+            [ChainId.Mainnet]: library,
           },
         });
       }
@@ -61,7 +77,7 @@ function YantraDappProvider({ children }) {
   }, [isChainError, account]);
 
   return (
-    <YantraDappContext.Provider value={{ isChainError }}>
+    <YantraDappContext.Provider value={{ isChainError, prices }}>
       {children}
     </YantraDappContext.Provider>
   );

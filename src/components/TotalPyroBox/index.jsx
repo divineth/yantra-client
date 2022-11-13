@@ -3,8 +3,10 @@ import style from "./total-box.module.css";
 import YantraSymbol from "../../assets/images/yantra-symbol.svg";
 import { formatUnits } from "ethers/lib/utils";
 import { genFormatter } from "../../utils/utils";
+import { useYantraDapp } from "../../providers/YantraProvider/YantraDappProvider";
 
-const TotalPyroBox = ({totalTokens}) => {
+const TotalPyroBox = ({ totalTokens }) => {
+  const { prices } = useYantraDapp();
 
   return (
     <div className={style.container}>
@@ -14,9 +16,21 @@ const TotalPyroBox = ({totalTokens}) => {
         </div>
         <div className={style.info__value}>
           <img src={YantraSymbol.src} alt="" />
-          <p>{totalTokens ? genFormatter.format(formatUnits(totalTokens, 18)) : "-"}</p>
+          <p>
+            {totalTokens
+              ? genFormatter.format(formatUnits(totalTokens, 18))
+              : "-"}
+          </p>
         </div>
-        <div className={style.usdt_value}>USDT Value: $0,000.00</div>
+        <div className={style.usdt_value}>
+          USDT Value: ${" "}
+          {prices?.ethValue
+            ? (
+                (totalTokens * prices?.ethValue * prices?.usdtValue) /
+                10 ** 18
+              ).toFixed(2)
+            : "0.00"}
+        </div>
       </div>
     </div>
   );

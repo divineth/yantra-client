@@ -1,4 +1,4 @@
-import { Mumbai, useCall } from "@usedapp/core";
+import { Mainnet, useCall } from "@usedapp/core";
 import { useStakeContract } from "../useContract";
 
 export const useStakerInfo = (userAddress) => {
@@ -10,8 +10,7 @@ export const useStakerInfo = (userAddress) => {
         contract: stakeContract,
         method: "getStake",
         args: [userAddress],
-      },
-      { chainId: Mumbai.chainId }
+      }, {chainId: Mainnet.chainId}
     ) ?? {};
 
   if (error) {

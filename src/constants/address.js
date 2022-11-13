@@ -22,3 +22,5 @@ export const NFT_ADDRESS = {
 };
 
 export const YANTRA_ETH_PAIR = "0x8c00410cf034c1ee6ff4ffd13340dafbab657234";
+
+export const ETH_USDT_PAIR = "0x0d4a11d5eeaac28ec3f61d100daf4d40471f1852";

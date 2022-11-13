@@ -15,3 +15,9 @@ export default function Mint() {
     </>
   );
 }
+
+export function getStaticProps(){
+  return{
+    notFound: true
+  }
+}

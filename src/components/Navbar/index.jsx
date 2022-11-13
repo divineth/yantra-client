@@ -5,7 +5,7 @@ import style from "./navbar.module.css";
 import WalletManager from "../WalletManager";
 import { Popover } from "@headlessui/react";
 import { Bars3Icon } from "@heroicons/react/20/solid";
-import { Mumbai, shortenIfAddress, useEthers, useConnector } from "@usedapp/core";
+import { shortenIfAddress, useEthers } from "@usedapp/core";
 import { useYantraDapp } from "../../providers/YantraProvider/YantraDappProvider";
 
 const Navbar = () => {
@@ -35,7 +35,6 @@ const Navbar = () => {
         </div>
         <div className={style.navbar__right}>
           <Link href="/stake">Stake</Link>
-          <Link href="/mint">Mint NFT</Link>
           <button
             onClick={openModal}
             className={
@@ -64,7 +63,6 @@ const Navbar = () => {
                   <div className="relative grid gap-4 bg-black p-4">
                     <div className="flex nexa-reg-18 text-white flex-col gap-4">
                       <Link href="/stake">Stake</Link>
-                      <Link href="/mint">Mint NFT</Link>
                       <button
                         onClick={openModal}
                         className={
@@ -85,7 +83,7 @@ const Navbar = () => {
         <WalletManager isOpen={isDialogOpen} onCloseModal={closeModal} />
       </div>
       {isChainError && (<div className="flex justify-center items-center bg-red-700 text-white nexa-reg-20 py-2">
-        You're connected to the wrong network. Switch to Polygon Testnet to use the app.
+        You're connected to the wrong network. Switch to Ethereum Mainnet to use the app.
       </div>)}
     </>
   );

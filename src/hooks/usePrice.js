@@ -1,6 +1,4 @@
-import { useCall } from "@usedapp/core";
-import { BigNumber } from "ethers";
-import { formatUnits, parseUnits } from "ethers/lib/utils";
+import { Mainnet, useCall } from "@usedapp/core";
 
 export const usePrice = (pairContract, invert, pairDecimals) => {
   const { value, error } =
@@ -10,7 +8,7 @@ export const usePrice = (pairContract, invert, pairDecimals) => {
         method: "getReserves",
         args: [],
       },
-      { refresh: 10 }
+      { refresh: 10, chainId: Mainnet.chainId }
     ) ?? {};
 
   if (error) {

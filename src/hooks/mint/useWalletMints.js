@@ -1,4 +1,4 @@
-import { Localhost, Mumbai, useCall } from "@usedapp/core";
+import { useCall } from "@usedapp/core";
 import { useNFTContract } from "../useContract";
 
 export const useWalletMints = (userAddress) => {
@@ -11,7 +11,7 @@ export const useWalletMints = (userAddress) => {
           contract: nftContract,
           method: "walletMints",
           args: [userAddress],
-        }, {refresh: 10, chainId: Mumbai.chainId}
+        }, {refresh: 10}
     ) ?? {};
 
   if (error) {
