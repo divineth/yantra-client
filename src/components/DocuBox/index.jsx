@@ -2,8 +2,9 @@ import React from "react";
 import style from "./docu-box.module.css";
 import ExternalLink from "../../assets/images/external-link.svg";
 import { formatUnits } from "ethers/lib/utils";
+import Image from "next/image";
 
-const DocuBox = ({apr}) => {
+const DocuBox = ({ apr }) => {
   return (
     <div className={style.container}>
       <div className={style.content}>
@@ -16,7 +17,12 @@ const DocuBox = ({apr}) => {
             className={style.info__link}
           >
             View Yantra on Etherscan
-            <img src={ExternalLink.src} alt="" />
+            <Image
+              src={ExternalLink.src}
+              alt="External link icon"
+              width={16}
+              height={16}
+            />
           </a>
         </div>
         <div className={style.info__body}>
@@ -29,13 +35,25 @@ const DocuBox = ({apr}) => {
               className={style.info__link}
             >
               View Instructions
-              <img className="w-4" src={ExternalLink.src} alt="" />
+              <Image
+                src={ExternalLink.src}
+                className="w-4"
+                alt="External link icon"
+                width={16}
+                height={16}
+              />
             </a>
           </div>
           <div className={style.body__content}>
-            
             <p>Yantra APR</p>
-            <div className={style.apr}>{apr ? `${formatUnits(apr?.percentage, 0)}.${formatUnits(apr?.decimals, 0)}%` : "-"}</div>
+            <div className={style.apr}>
+              {apr
+                ? `${formatUnits(apr?.percentage, 0)}.${formatUnits(
+                    apr?.decimals,
+                    0
+                  )}%`
+                : "-"}
+            </div>
           </div>
         </div>
       </div>

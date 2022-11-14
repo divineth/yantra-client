@@ -3,6 +3,7 @@ import style from "./info-box.module.css";
 import Info1 from "../../assets/images/info_one.svg";
 import YantraSymbol from "../../assets/images/yantra-symbol.svg";
 import { useYantraDapp } from "../../providers/YantraProvider/YantraDappProvider";
+import Image from "next/image";
 
 const InfoBox = ({ title, value = 0, decimalPlaces }) => {
   const { prices } = useYantraDapp();
@@ -16,11 +17,11 @@ const InfoBox = ({ title, value = 0, decimalPlaces }) => {
       <div className={style.content}>
         <div className={style.info__header}>
           <p>{title}</p>
-          <img src={Info1.src} alt="" />
+          <Image src={Info1.src} alt="" width={24} height={24} />
         </div>
         <div className={style.info__value}>
           <div className="flex gap-2">
-            <img src={YantraSymbol.src} alt="" />
+            <Image src={YantraSymbol.src} alt="" width={28} height={28} />
             <p>$YANTRA</p>
           </div>
           <p>{parsedValue(value)}</p>

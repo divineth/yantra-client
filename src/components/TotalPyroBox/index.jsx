@@ -4,6 +4,7 @@ import YantraSymbol from "../../assets/images/yantra-symbol.svg";
 import { formatUnits } from "ethers/lib/utils";
 import { genFormatter } from "../../utils/utils";
 import { useYantraDapp } from "../../providers/YantraProvider/YantraDappProvider";
+import Image from "next/image";
 
 const TotalPyroBox = ({ totalTokens }) => {
   const { prices } = useYantraDapp();
@@ -15,7 +16,12 @@ const TotalPyroBox = ({ totalTokens }) => {
           <h2>Total $YANTRA Staked By All Holders</h2>
         </div>
         <div className={style.info__value}>
-          <img src={YantraSymbol.src} alt="" />
+          <Image
+            src={YantraSymbol.src}
+            alt=""
+            width={28}
+            height={28}
+          />
           <p>
             {totalTokens
               ? genFormatter.format(formatUnits(totalTokens, 18))

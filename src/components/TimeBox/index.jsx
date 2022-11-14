@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import style from "./info-box.module.css";
 import Info1 from "../../assets/images/info_one.svg";
 import intervalToDuration from "date-fns/intervalToDuration";
+import Image from "next/image";
 
 const TimeBox = ({ timestamp }) => {
   const [timer, setTimer] = useState();
@@ -26,7 +27,7 @@ const TimeBox = ({ timestamp }) => {
       <div className={style.content}>
         <div className={style.info__header}>
           <p>Time Since Initial Stake</p>
-          <img src={Info1.src} alt="" />
+          <Image src={Info1.src} alt="" width={24} height={24} />
         </div>
         <div className={style.info__value}>
           <div className={style.time}>

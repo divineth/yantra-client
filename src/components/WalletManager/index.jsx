@@ -9,6 +9,7 @@ import ExternalLink from "../../assets/images/external-link.svg";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { useEthers, shortenIfAddress } from "@usedapp/core";
 import Spinner from "../../assets/images/spinner.svg";
+import Image from "next/image";
 
 const providers = [
   {
@@ -126,7 +127,7 @@ function WalletManager({ isOpen, onCloseModal }) {
                             disabled={isLoading}
                             onClick={() => handleConnectWallet(options, key)}
                           >
-                            <img src={icon} alt={displayName} />
+                            <Image src={icon} width={34} height={34} alt="Wallet icons"/>
                             <span>{displayName}</span>
                             {isLoading && key == selectedKey && (
                               <span>
@@ -212,7 +213,12 @@ function WalletManager({ isOpen, onCloseModal }) {
                           onCopy={() => addressCopied()}
                         >
                           <p className={style.wallet_dialog_bottom_text}>
-                            <img src={CopySymbol.src} alt="etherscan" />
+                            <Image
+                              alt=""
+                              src={CopySymbol.src}
+                              width={10}
+                              height={10}
+                            />
                             <span>Copy Address</span>
                             {copied ? (
                               <span className={style.tooltip}>Copied.</span>
@@ -226,6 +232,13 @@ function WalletManager({ isOpen, onCloseModal }) {
                             target="_blank"
                             rel="noopener noreferrer"
                           >
+                            <Image
+                              src={ExternalLink.src}
+                              alt=""
+                              width={16}
+                              height={16}
+                            />
+
                             <img src={ExternalLink.src} alt="etherscan" />
                             <span>View on Etherscan</span>
                           </a>

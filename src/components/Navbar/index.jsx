@@ -7,11 +7,12 @@ import { Popover } from "@headlessui/react";
 import { Bars3Icon } from "@heroicons/react/20/solid";
 import { shortenIfAddress, useEthers } from "@usedapp/core";
 import { useYantraDapp } from "../../providers/YantraProvider/YantraDappProvider";
+import Image from "next/image";
 
 const Navbar = () => {
   const { account } = useEthers();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const {isChainError} = useYantraDapp();
+  const { isChainError } = useYantraDapp();
 
   function closeModal() {
     setIsDialogOpen(false);
@@ -30,7 +31,7 @@ const Navbar = () => {
       <div className={style.navbar}>
         <div className={style.navbar__left}>
           <Link href="/stake">
-            <img src={Logo.src} alt="" />
+            <Image src={Logo.src} alt="Yantra logo" width={204} height={49} />
           </Link>
         </div>
         <div className={style.navbar__right}>
@@ -82,9 +83,12 @@ const Navbar = () => {
         </Popover>
         <WalletManager isOpen={isDialogOpen} onCloseModal={closeModal} />
       </div>
-      {isChainError && (<div className="flex justify-center items-center bg-red-700 text-white nexa-reg-20 py-2">
-        You're connected to the wrong network. Switch to Ethereum Mainnet to use the app.
-      </div>)}
+      {isChainError && (
+        <div className="flex justify-center items-center bg-red-700 text-white nexa-reg-20 py-2">
+          You're connected to the wrong network. Switch to Ethereum Mainnet to
+          use the app.
+        </div>
+      )}
     </>
   );
 };
