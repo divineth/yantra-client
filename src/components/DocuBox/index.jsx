@@ -37,7 +37,7 @@ const DocuBox = ({ apr }) => {
               View Instructions
               <Image
                 src={ExternalLink.src}
-                className="w-4"
+                className="w-5"
                 alt="External link icon"
                 width={16}
                 height={16}

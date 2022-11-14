@@ -238,8 +238,6 @@ function WalletManager({ isOpen, onCloseModal }) {
                               width={16}
                               height={16}
                             />
-
-                            <img src={ExternalLink.src} alt="etherscan" />
                             <span>View on Etherscan</span>
                           </a>
                         </p>
