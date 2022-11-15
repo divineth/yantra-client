@@ -11,7 +11,7 @@ export const usePendingRewards = (userAddress) => {
         method: "pendingReward",
         args: [userAddress],
       },
-      { refresh: 10, chainId: Mainnet.chainId }
+      { chainId: Mainnet.chainId }
     ) ?? {};
 
   if (error) {

@@ -24,7 +24,7 @@ const TotalPyroBox = ({ totalTokens }) => {
           />
           <p>
             {totalTokens
-              ? genFormatter.format(formatUnits(totalTokens, 18))
+              ? totalTokens
               : "-"}
           </p>
         </div>

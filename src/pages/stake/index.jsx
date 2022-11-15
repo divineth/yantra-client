@@ -17,7 +17,7 @@ export default function StakePage() {
       <title>$YANTRA | SRI</title>
     </Head>
       <InfoSection info={staker} pendingRewards={rewards} />
-      <Stake info={staker}/>
+      <Stake info={staker} pendingRewards={rewards}/>
     </>
   );
 }

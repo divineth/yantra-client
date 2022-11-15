@@ -136,7 +136,7 @@ const ConfirmStakeModal = ({ isOpen, onCloseModal, stakeAmount, contract }) => {
                       />
                     </svg>
                     <p>
-                      Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+                      Approve DAPP to stake $YANTRA.
                     </p>
                   </div>
                   <div className={style.modal_dialog_buttons}>

@@ -58,7 +58,7 @@
 }
 
 .stake__buttons {
-  @apply flex flex-col md:flex-row justify-center gap-4 md:gap-6;
+  @apply flex flex-col md:flex-row justify-center gap-4 md:gap-2;
 }
 
 .stake__buttons button {

@@ -16,7 +16,7 @@ const InfoSection = ({ info, pendingRewards }) => {
         <InfoBox
           title={"Holder Amount Earned"}
           value={pendingRewards ? formatUnits(pendingRewards, 18) : 0}
-          decimalPlaces={4}
+          decimalPlaces={10}
         />
         <TimeBox timestamp={info ? info?.since * 1000 : 0} />
       </div>

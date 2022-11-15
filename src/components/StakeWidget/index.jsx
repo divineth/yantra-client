@@ -17,8 +17,9 @@ import { useUnstakeTokens } from "../../hooks/stake/useUnstakeTokens";
 
 import SpinnerAlt from "../../assets/images/spinner-alt.svg";
 import { useYantraDapp } from "../../providers/YantraProvider/YantraDappProvider";
+import { useClaimRewards } from "../../hooks/stake/useClaimRewards";
 
-const StakeWidget = ({ stakedTokens }) => {
+const StakeWidget = ({ stakedTokens, rewards }) => {
   const { account } = useEthers();
   const [modalOpen, setModalOpen] = useState(false);
   const [amount, setAmount] = useState(0);
@@ -31,10 +32,12 @@ const StakeWidget = ({ stakedTokens }) => {
   const [walletModalOpen, setWalletModalOpen] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [isUnstaking, setIsUnstaking] = useState(false);
+  const [isClaiming, setIsClaiming] = useState(false);
 
-  const {isChainError} = useYantraDapp();
+  const { isChainError } = useYantraDapp();
 
   const { send: unstakeToken, state: unstakeState } = useUnstakeTokens();
+  const { send: claimRewards, state: claimState } = useClaimRewards();
 
   useEffect(() => {
     if (isUnstaking && unstakeState.status == "Success") {
@@ -50,6 +53,22 @@ const StakeWidget = ({ stakedTokens }) => {
     }
   }, [unstakeState]);
 
+  useEffect(() => {
+    if (isClaiming && claimState.status == "Success") {
+      alert("Rewards claimed successfully");
+      setIsClaiming(false);
+    } else if (
+      isClaiming &&
+      (claimState.status == "Fail" || claimState.status == "Exception")
+    ) {
+      alert(
+        claimState.errorMessage.charAt(0).toUpperCase() +
+          claimState.errorMessage.slice(1)
+      );
+      setIsClaiming(false);
+    }
+  }, [claimState]);
+
   const handleUnstakeToken = () => {
     setIsUnstaking(true);
     try {
@@ -57,6 +76,16 @@ const StakeWidget = ({ stakedTokens }) => {
     } catch (e) {
       console.error("Exception Thrown: ", e);
       setIsUnstaking(false);
+    }
+  };
+
+  const handleClaimRewards = () => {
+    setIsClaiming(true);
+    try {
+      void claimRewards();
+    } catch (e) {
+      console.error("Exception Thrown: ", e);
+      setIsClaiming(false);
     }
   };
 
@@ -180,7 +209,9 @@ const StakeWidget = ({ stakedTokens }) => {
                 disabled={
                   amount <= 0 ||
                   compareNonTokenWithToken(balance, amount, 18) == -1 ||
-                  isUnstaking || isChainError
+                  isUnstaking ||
+                  isChainError ||
+                  isClaiming
                 }
               >
                 Stake
@@ -190,13 +221,27 @@ const StakeWidget = ({ stakedTokens }) => {
                   amount <= 0 ||
                   compareNonTokenWithToken(balance, amount, 18) == -1 ||
                   compareNonTokenWithToken(stakedTokens, amount, 18) == -1 ||
-                  isUnstaking || isChainError
+                  isUnstaking ||
+                  isChainError ||
+                  isClaiming
                 }
                 onClick={handleUnstakeToken}
                 className="flex justify-center items-center gap-1"
               >
                 Unstake
                 {isUnstaking && (
+                  <img className="w-6" src={SpinnerAlt.src} alt="" />
+                )}
+              </button>
+              <button
+                disabled={
+                  rewards <= 0 || isUnstaking || isClaiming || isChainError
+                }
+                className="flex justify-center items-center gap-1"
+                onClick={handleClaimRewards}
+              >
+                Claim Rewards
+                {isClaiming && (
                   <img className="w-6" src={SpinnerAlt.src} alt="" />
                 )}
               </button>

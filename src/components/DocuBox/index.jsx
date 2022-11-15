@@ -29,7 +29,7 @@ const DocuBox = ({ apr }) => {
           <div className={style.body__content}>
             <p>Yantra Staking Instructions</p>
             <a
-              href="https://yantra-dapp.netlify.app"
+              href="https://yantra999.com"
               target="_blank"
               rel="noreferrer"
               className={style.info__link}

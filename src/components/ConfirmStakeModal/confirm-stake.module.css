@@ -49,7 +49,7 @@
 }
 
 .modal_dialog_notice {
-  @apply flex gap-2;
+  @apply flex items-center gap-2;
   @apply mt-2 p-4 rounded-2xl text-white;
   background-color: #2e2e2e;
 }
