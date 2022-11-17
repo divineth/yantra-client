@@ -24,7 +24,7 @@ const TotalPyroBox = ({ totalTokens }) => {
           />
           <p>
             {totalTokens
-              ? totalTokens
+              ? Number(totalTokens).toFixed(2)
               : "-"}
           </p>
         </div>
