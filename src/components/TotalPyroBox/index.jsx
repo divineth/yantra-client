@@ -16,20 +16,11 @@ const TotalPyroBox = ({ totalTokens }) => {
           <h2>Total $YANTRA Staked By All Holders</h2>
         </div>
         <div className={style.info__value}>
-          <Image
-            src={YantraSymbol.src}
-            alt=""
-            width={28}
-            height={28}
-          />
-          <p>
-            {totalTokens
-              ? Number(totalTokens).toFixed(2)
-              : "-"}
-          </p>
+          <Image src={YantraSymbol.src} alt="" width={28} height={28} />
+          <p>{totalTokens ? Number(totalTokens).toFixed(2) : "-"}</p>
         </div>
         <div className={style.usdt_value}>
-          USDT Value: ${" "}
+          USDT Value: $
           {prices?.ethValue
             ? (
                 (totalTokens * prices?.ethValue * prices?.usdtValue) /
