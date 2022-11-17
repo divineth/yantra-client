@@ -5,7 +5,7 @@ import { ETH_USDT_PAIR, NFT_ADDRESS, STAKE_ADDRESS, TOKEN_ADDRESS, YANTRA_ETH_PA
 import STAKE_ABI from '../contracts/SRI.json';
 import ERC20ABI from '../contracts/ERC20ABI.json';
 import UniswapV2 from '../contracts/UniswapV2.json';
-import NFT_ABI from '../contracts/VoiNFT.json';
+import NFT_ABI from '../contracts/YantraNFTs.json';
 
 export function useTokenContract(){
     return new Contract(TOKEN_ADDRESS[Mainnet.chainId], new utils.Interface(ERC20ABI));
@@ -25,5 +25,5 @@ export function useStakeContract() {
 }
 
 export function useNFTContract() {
-    return new Contract(NFT_ADDRESS[Mainnet.chainId], new utils.Interface(NFT_ABI.abi));
+    return new Contract(NFT_ADDRESS[Mainnet.chainId], new utils.Interface(NFT_ABI));
 }

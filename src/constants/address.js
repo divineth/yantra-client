@@ -15,7 +15,7 @@ export const STAKE_ADDRESS = {
 };
 
 export const NFT_ADDRESS = {
-  [Mainnet.chainId]: "",
+  [Mainnet.chainId]: "0x41d40308c7a69Be15a59E0F01F06726F630574e1",
   [Goerli.chainId]: "",
   [Localhost.chainId]: "0xA65216eFB6c210080302Dbd7AEE0D8f2E1a39d53",
   [Mumbai.chainId]: "0xB61E1ec7Bb0E0f6F0753eDCD9786b598DBa832ed",

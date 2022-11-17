@@ -36,6 +36,7 @@ const Navbar = () => {
         </div>
         <div className={style.navbar__right}>
           <Link href="/stake">Stake</Link>
+          <Link href="/mint">Mint</Link>
           <button
             onClick={openModal}
             className={
