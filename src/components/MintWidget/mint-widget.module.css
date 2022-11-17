@@ -21,7 +21,7 @@
 }
 
 .mint__info {
-  @apply flex justify-between gap-16;
+  @apply flex items-center justify-between gap-2 md:gap-16;
   @apply rounded-3xl border-y-2 border-white px-4 py-4;
 }
 
