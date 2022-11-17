@@ -53,6 +53,12 @@ const MintWidget = () => {
     return BigNumber.from(saleStatus?._roundSupply).eq(saleStatus?._roundLimit);
   }
 
+  const saleStarted = () => {
+    if(!saleStatus) return;
+
+    return saleStatus?._mintEnabled;
+  }
+
   useEffect(() => {
     if (isMinting && mintNFTState.status == "Success") {
       alert("NFT Minted Successfully");
@@ -207,11 +213,13 @@ const MintWidget = () => {
             </button>
           ) : (
             <button
-              disabled={nftAmount <= 0 || nftAmount > 10 || isMinting || checkRoundClosed() || isChainError}
+              disabled={nftAmount <= 0 || nftAmount > 10 || isMinting || checkRoundClosed() || !saleStarted() || isChainError}
               onClick={handleMintNFT}
               className="flex justify-center items-center gap-1"
             >
-              {checkRoundClosed() ? "Round Closed" : "Mint NFT"}
+              {!saleStarted() && "Sale is not enabled"}
+              {checkRoundClosed() && saleStarted() && "Round Closed"}
+              {saleStarted() && !checkRoundClosed() && "Mint NFT"}
               {isMinting && <img className="w-6" src={SpinnerAlt.src} alt="" />}
             </button>
           )}
