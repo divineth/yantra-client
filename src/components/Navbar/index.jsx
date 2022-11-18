@@ -65,7 +65,7 @@ const Navbar = () => {
                   <div className="relative grid gap-4 bg-black p-4">
                     <div className="flex nexa-reg-18 text-white flex-col gap-4">
                       <Link href="/stake">Stake</Link>
-                      <Link href="/stake">Mint</Link>
+                      <Link href="/mint">Mint</Link>
                       <button
                         onClick={openModal}
                         className={
