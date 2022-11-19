@@ -11,7 +11,7 @@ const InfoSection = ({ info, pendingRewards }) => {
         <InfoBox
           title={"Holder Amount Staked"}
           value={info ? formatUnits(info?.stakedAmount, 18) : 0}
-          decimalPlaces={2}
+          decimalPlaces={10}
         />
         <InfoBox
           title={"Holder Amount Earned"}

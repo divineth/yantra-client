@@ -27,7 +27,6 @@ const StakeWidget = ({ stakedTokens, rewards }) => {
   const balance = useTokenBalance(TOKEN_ADDRESS[Mainnet.chainId], account);
 
   const [formattedBalance, setFormattedBalance] = useState(0);
-  const [sliderValue, setSliderValue] = useState(0);
 
   const [walletModalOpen, setWalletModalOpen] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
@@ -90,22 +89,11 @@ const StakeWidget = ({ stakedTokens, rewards }) => {
   };
 
   const handleStakeAmountChange = (value) => {
-    setSliderValue(0);
     setAmount(value);
   };
 
   const setMaxValue = () => {
     setAmount(formattedBalance);
-    setSliderValue(100);
-  };
-
-  const setStakeValue = (value) => {
-    setSliderValue(value);
-    if (balance) {
-      const val = BigNumber.from(balance.mul(value).div(100));
-      const res = formatUnits(val, 18);
-      setAmount(value == 100 ? res : (+res).toFixed(4));
-    }
   };
 
   useEffect(() => {
@@ -166,7 +154,7 @@ const StakeWidget = ({ stakedTokens, rewards }) => {
     },
   ];
   return (
-    <div className={style.container}>
+    <div className={`${style.container}`}>
       <div className={style.content}>
         <div className={style.stake__header}>
           <p className={style.stake__title}>Stake</p>
@@ -175,29 +163,18 @@ const StakeWidget = ({ stakedTokens, rewards }) => {
           </p>
         </div>
         <div className={style.stake__form}>
-          <input
-            className={style.stake__input}
-            type="text"
-            value={amount}
-            onChange={(e) => {
-              onInputNumberChange(e, handleStakeAmountChange);
-            }}
-          />
-          <p className="pt-1 nexa-reg-15 text-red-600">{errorMessage}</p>
-          <div className={style.stake__slider}>
-            <CustomSlider
-              aria-label="amount"
-              defaultValue={0}
-              valueLabelDisplay="auto"
-              step={10}
-              min={0}
-              max={100}
-              marks={marks}
-              value={sliderValue}
-              onChange={(e) => setStakeValue(e.target.value)}
+          <div className="flex justify-between gap-4">
+            <input
+              className={style.stake__input}
+              type="text"
+              value={amount}
+              onChange={(e) => {
+                onInputNumberChange(e, handleStakeAmountChange);
+              }}
             />
             <button onClick={setMaxValue}>Max</button>
           </div>
+          <p className="pt-1 nexa-reg-15 text-red-600">{errorMessage}</p>
         </div>
         <div className={style.stake__buttons}>
           {account ? (
@@ -233,18 +210,6 @@ const StakeWidget = ({ stakedTokens, rewards }) => {
                   <img className="w-6" src={SpinnerAlt.src} alt="" />
                 )}
               </button>
-              <button
-                disabled={
-                  rewards <= 0 || isUnstaking || isClaiming || isChainError
-                }
-                className="flex justify-center items-center gap-1"
-                onClick={handleClaimRewards}
-              >
-                Claim Rewards
-                {isClaiming && (
-                  <img className="w-6" src={SpinnerAlt.src} alt="" />
-                )}
-              </button>
             </>
           ) : (
             <button
@@ -256,6 +221,22 @@ const StakeWidget = ({ stakedTokens, rewards }) => {
             </button>
           )}
         </div>
+        {account && (
+          <div className={`${style.stake__buttons} pt-4`}>
+            <button
+              disabled={
+                rewards <= 0 || isUnstaking || isClaiming || isChainError
+              }
+              className="flex justify-center items-center gap-1"
+              onClick={handleClaimRewards}
+            >
+              Claim Rewards
+              {isClaiming && (
+                <img className="w-6" src={SpinnerAlt.src} alt="" />
+              )}
+            </button>
+          </div>
+        )}
       </div>
       <WalletManager isOpen={walletModalOpen} onCloseModal={closeWalletModal} />
       <ConfirmStakeModal

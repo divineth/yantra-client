@@ -3,7 +3,7 @@
 }
 
 .content{
-    @apply flex flex-col grow justify-between lg:flex-row gap-4 lg:gap-16 lg:max-w-5xl w-full;
+    @apply flex flex-col grow justify-between lg:flex-row gap-4 lg:gap-6 lg:max-w-5xl w-full;
 }
 
 .content__left{
@@ -11,5 +11,5 @@
 }
 
 .content__right{
-    @apply flex flex-col gap-4 lg:gap-5 justify-center items-center lg:justify-between;
+    @apply flex flex-col gap-4 justify-center items-center lg:justify-between;
 }
