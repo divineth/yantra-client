@@ -109,8 +109,10 @@ const StakeWidget = ({ stakedTokens, rewards }) => {
       if (amount <= 0) {
         setErrorMessage("Enter an amount");
       } else if (
-        balance &&
-        compareNonTokenWithToken(balance, amount, 18) == -1
+        balance != undefined &&
+        compareNonTokenWithToken(balance, amount, 18) == -1 &&
+        stakedTokens != undefined &&
+        compareNonTokenWithToken(stakedTokens, amount, 18) == -1
       ) {
         setErrorMessage("Insufficient balance");
       } else {
@@ -196,7 +198,6 @@ const StakeWidget = ({ stakedTokens, rewards }) => {
               <button
                 disabled={
                   amount <= 0 ||
-                  compareNonTokenWithToken(balance, amount, 18) == -1 ||
                   compareNonTokenWithToken(stakedTokens, amount, 18) == -1 ||
                   isUnstaking ||
                   isChainError ||
