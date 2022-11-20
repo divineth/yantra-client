@@ -4,13 +4,10 @@ import Info1 from "../../assets/images/info_one.svg";
 import YantraSymbol from "../../assets/images/yantra-symbol.svg";
 import { useYantraDapp } from "../../providers/YantraProvider/YantraDappProvider";
 import Image from "next/image";
+import { parseDecimals } from "../../utils/utils";
 
 const InfoBox = ({ title, value = 0, decimalPlaces }) => {
   const { prices } = useYantraDapp();
-
-  const parsedValue = (num) => {
-    return (+num).toFixed(decimalPlaces);
-  };
 
   return (
     <div className={style.container}>
@@ -24,7 +21,7 @@ const InfoBox = ({ title, value = 0, decimalPlaces }) => {
             <Image src={YantraSymbol.src} alt="" width={28} height={28} />
             <p>$YANTRA</p>
           </div>
-          <p>{parsedValue(value)}</p>
+          <p>{parseDecimals(value, decimalPlaces)}</p>
         </div>
         <div className={style.usdt_value}>
           USDT Value: $

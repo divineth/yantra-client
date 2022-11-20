@@ -27,3 +27,8 @@ export function compareNonTokenWithToken(tokenValue, nonTokenValue, decimals) {
     return 0;
   }
 }
+
+export function parseDecimals(num, decimals){
+  var re = new RegExp('^-?\\d+(?:\.\\d{0,' + (decimals || -1) + '})?');
+  return num.toString().match(re)[0];
+}
