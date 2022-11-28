@@ -24,6 +24,14 @@
     color: #ffffff;
 }
 
+.footer__left p a{
+    text-decoration: underline;
+}
+
+.footer__left p a:hover{
+    color: #F92032;
+}
+
 .footer__right {
     @apply flex;
 }

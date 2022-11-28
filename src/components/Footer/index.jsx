@@ -10,7 +10,16 @@ const Footer = () => {
       <div className={style.footer__content}>
         <div className={style.footer__left}>
           <h3>$YANTRA 2022 All rights reserved.</h3>
-          <p>Built by Embrace Tech</p>
+          <p>
+            Built by{" "}
+            <a
+              href="https://t.me/whokilledthedeadsea"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Embrace Tech
+            </a>
+          </p>
         </div>
         <div className={style.footer__right}>
           <div className={style.socials}>
